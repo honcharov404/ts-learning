@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор KPI для адміністратора</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        input[type="number"], input[type="text"] {
+            padding: 0.75rem;
+            border: 1px solid #cbd5e0; /* Gray-300 */
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #6366f1; /* Indigo-500 */
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        .button {
+            padding: 0.8rem 1.5rem;
+            background-color: #4f46e5; /* Indigo-600 */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+        }
+        .button:hover {
+            background-color: #4338ca; /* Indigo-700 */
+            transform: translateY(-1px);
+        }
+        .button:active {
+            transform: translateY(0);
+        }
+        .result-box {
+            background-color: #e0e7ff; /* Indigo-100 */
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e3a8a; /* Blue-900 */
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Калькулятор KPI для адміністратора</h1>
+        <p class="text-center text-gray-600 mb-8">Будь ласка, введіть показники ефективності адміністратора для розрахунку змінної частини оплати.</p>
+
+        <div class="space-y-6">
+            <!-- Fixed Salary Display -->
+            <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+                <p class="text-lg font-semibold text-gray-700">Ставка (фіксована частина): <span class="text-blue-600">10 000 грн</span></p>
+                <p class="text-sm text-gray-500 mt-1">Максимальна змінна частина: 5 000 грн</p>
+            </div>
+
+            <!-- KPI Inputs -->
+            <div class="p-6 bg-white rounded-lg shadow-md border border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Введення показників KPI</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- ПІБ Administrator -->
+                    <div class="md:col-span-2">
+                        <label for="adminName" class="block text-gray-700 text-sm font-medium mb-2">ПІБ Адміністратора</label>
+                        <input type="text" id="adminName" placeholder="Введіть повне ім'я" class="focus:border-indigo-500">
+                    </div>
+
+                    <!-- KPI 1: Своєчасність оновлення інформації -->
+                    <div>
+                        <label for="kpi1" class="block text-gray-700 text-sm font-medium mb-2">1. Своєчасність оновлення інформації (присутність, харчування, каса) <span class="text-gray-500">(%)</span></label>
+                        <input type="number" id="kpi1" min="0" max="100" value="100" class="focus:border-indigo-500">
+                        <p class="text-xs text-gray-500 mt-1">Ціль: 100% до 08:30 щодня.</p>
+                    </div>
+                    <!-- KPI 2: Дотримання графіку провітрювання та прибирання -->
+                    <div>
+                        <label for="kpi2" class="block text-gray-700 text-sm font-medium mb-2">2. Дотримання графіку провітрювання та прибирання <span class="text-gray-500">(%)</span></label>
+                        <input type="number" id="kpi2" min="0" max="100" value="100" class="focus:border-indigo-500">
+                        <p class="text-xs text-gray-500 mt-1">Ціль: 100% дотримання.</p>
+                    </div>
+
+                    <!-- KPI 3: Якість ведення CRM -->
+                    <div>
+                        <label for="kpi3" class="block text-gray-700 text-sm font-medium mb-2">3. Якість ведення CRM <span class="text-gray-500">(%)</span></label>
+                        <input type="number" id="kpi3" min="0" max="100" value="100" class="focus:border-indigo-500">
+                        <p class="text-xs text-gray-500 mt-1">Ціль: 0 пропущених записів/змін (100% внесення).</p>
+                    </div>
+
+                    <!-- KPI 4: Запобігання кризовим ситуаціям -->
+                    <div>
+                        <label for="kpi4" class="block text-gray-700 text-sm font-medium mb-2">4. Запобігання кризовим ситуаціям <span class="text-gray-500">(кількість на тиждень)</span></label>
+                        <input type="number" id="kpi4" min="0" value="4" class="focus:border-indigo-500">
+                        <p class="text-xs text-gray-500 mt-1">Ціль: Не менше 4 ситуацій на місяць.</p>
+                    </div>
+
+                    <!-- KPI 5: Оцінка умов навчання -->
+                    <div>
+                        <label for="kpi5" class="block text-gray-700 text-sm font-medium mb-2">5. Оцінка умов навчання (чистота, оснащення, безпека) <span class="text-gray-500">(%)</span></label>
+                        <input type="number" id="kpi5" min="0" max="100" value="100" class="focus:border-indigo-500">
+                        <p class="text-xs text-gray-500 mt-1">Ціль: Відсутність зауважень (100% відповідність).</p>
+                    </div>
+
+                    <!-- KPI 6: Комунікація з батьками -->
+                    <div>
+                        <label for="kpi6" class="block text-gray-700 text-sm font-medium mb-2">6. Комунікація з батьками (швидкість та зручність) <span class="text-gray-500">(%)</span></label>
+                        <input type="number" id="kpi6" min="0" max="100" value="100" class="focus:border-indigo-500">
+                        <p class="text-xs text-gray-500 mt-1">Ціль: Швидке реагування та зручність каналів (100% задоволеності).</p>
+                    </div>
+
+                    <!-- KPI 7: Координація гуртків та додаткових активностей -->
+                    <div>
+                        <label for="kpi7" class="block text-gray-700 text-sm font-medium mb-2">7. Координація гуртків (популярність, задоволеність) <span class="text-gray-500">(%)</span></label>
+                        <input type="number" id="kpi7" min="0" max="100" value="100" class="focus:border-indigo-500">
+                        <p class="text-xs text-gray-500 mt-1">Ціль: >80% відвідуваності, високий рівень задоволеності (100% як ідеал).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button onclick="calculateKPI()" class="button flex-1">Розрахувати оплату</button>
+                <button onclick="exportToExcel()" class="button flex-1 bg-green-600 hover:bg-green-700">Вивантажити в Excel</button>
+            </div>
+
+
+            <!-- Results Display -->
+            <div id="results" class="result-box hidden">
+                <p class="text-gray-800">Змінна частина до виплати: <span id="variablePay" class="font-bold text-indigo-700">0 грн</span></p>
+                <p class="text-gray-800 mt-2">Загальна сума до виплати: <span id="totalPay" class="font-bold text-indigo-700">0 грн</span></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const fixedSalary = 10000; // Фіксована ставка
+        const maxVariablePay = 5000; // Максимальна змінна частина
+
+        // Ваги KPI (відповідно до таблиці)
+        const kpiWeights = {
+            kpi1: 0.20, // Своєчасність
+            kpi2: 0.15, // Прибирання
+            kpi3: 0.25, // CRM
+            kpi4: 0.10, // Запобігання кризам
+            kpi5: 0.15, // Умови навчання
+            kpi6: 0.10, // Комунікація
+            kpi7: 0.05  // Гуртки
+        };
+
+        // Global variables to store calculated values for export
+        let globalCalculatedVariablePay = 0;
+        let globalTotalPay = 0;
+        let globalAdminName = '';
+        let globalKpiValues = {};
+
+
+        function calculateKPI() {
+            const adminName = document.getElementById('adminName').value.trim();
+            const kpi1 = parseFloat(document.getElementById('kpi1').value) || 0;
+            const kpi2 = parseFloat(document.getElementById('kpi2').value) || 0;
+            const kpi3 = parseFloat(document.getElementById('kpi3').value) || 0;
+            const kpi4 = parseFloat(document.getElementById('kpi4').value) || 0; // Кількість на тиждень
+            const kpi5 = parseFloat(document.getElementById('kpi5').value) || 0;
+            const kpi6 = parseFloat(document.getElementById('kpi6').value) || 0;
+            const kpi7 = parseFloat(document.getElementById('kpi7').value) || 0;
+
+            let totalWeightedPerformance = 0;
+
+            // Розрахунок внеску кожного KPI
+            // Для процентних KPI: (введене значення / 100) * вага KPI
+            totalWeightedPerformance += (kpi1 / 100) * kpiWeights.kpi1;
+            totalWeightedPerformance += (kpi2 / 100) * kpiWeights.kpi2;
+            totalWeightedPerformance += (kpi3 / 100) * kpiWeights.kpi3;
+            totalWeightedPerformance += (kpi5 / 100) * kpiWeights.kpi5;
+            totalWeightedPerformance += (kpi6 / 100) * kpiWeights.kpi6;
+            totalWeightedPerformance += (kpi7 / 100) * kpiWeights.kpi7;
+
+            // Для KPI 4 (Запобігання кризам):
+            // Ціль: 1 ситуація на тиждень (тобто 4 за місяць, якщо місяць = 4 тижні)
+            // Припустимо, що максимальний внесок за цей KPI досягається при 4 і більше запобіганнях на місяць
+            // Якщо менше 4, то пропорційно
+            const weeklyCrisisPreventionTarget = 1;
+            const monthlyCrisisPreventionTarget = weeklyCrisisPreventionTarget * 4; // Приблизно 4 тижні в місяці
+
+            let kpi4Performance = 0;
+            if (kpi4 >= monthlyCrisisPreventionTarget) {
+                kpi4Performance = 1; // 100% виконання
+            } else {
+                kpi4Performance = kpi4 / monthlyCrisisPreventionTarget; // Пропорційне виконання
+            }
+            totalWeightedPerformance += kpi4Performance * kpiWeights.kpi4;
+
+            // Обмеження загальної ефективності 100% (або 1.0)
+            totalWeightedPerformance = Math.min(totalWeightedPerformance, 1.0);
+
+            // Розрахунок змінної частини
+            const calculatedVariablePay = maxVariablePay * totalWeightedPerformance;
+            const totalPay = fixedSalary + calculatedVariablePay;
+
+            // Store values globally for export
+            globalCalculatedVariablePay = calculatedVariablePay;
+            globalTotalPay = totalPay;
+            globalAdminName = adminName;
+            globalKpiValues = {
+                kpi1: kpi1,
+                kpi2: kpi2,
+                kpi3: kpi3,
+                kpi4: kpi4,
+                kpi5: kpi5,
+                kpi6: kpi6,
+                kpi7: kpi7
+            };
+
+            // Оновлення результатів на сторінці
+            document.getElementById('variablePay').textContent = calculatedVariablePay.toFixed(2) + ' грн';
+            document.getElementById('totalPay').textContent = totalPay.toFixed(2) + ' грн';
+            document.getElementById('results').classList.remove('hidden');
+        }
+        function exportToExcel() {
+            if (!globalAdminName) {
+                alert("Будь ласка, введіть ПІБ адміністратора перед експортом.");
+                return;
+            }
+            if (globalTotalPay === 0 && globalCalculatedVariablePay === 0) {
+                 alert("Будь ласка, розрахуйте оплату перед експортом.");
+                 return;
+            }
+
+
+            // Data for CSV
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // \uFEFF for UTF-8 BOM
+
+            // Headers
+            csvContent += "Показник,Значення\n";
+
+            // General Info
+            csvContent += `ПІБ Адміністратора,${globalAdminName}\n`;
+            csvContent += `Ставка (фіксована частина),${fixedSalary} грн\n`;
+            csvContent += `Максимальна змінна частина,${maxVariablePay} грн\n`;
+            csvContent += `Змінна частина до виплати,${globalCalculatedVariablePay.toFixed(2)} грн\n`;
+            csvContent += `Загальна сума до виплати,${globalTotalPay.toFixed(2)} грн\n`;
+            csvContent += "\nKPI Показники\n"; // Separator for clarity
+
+            // KPI Details
+            csvContent += `1. Своєчасність оновлення інформації (%),${globalKpiValues.kpi1}\n`;
+            csvContent += `2. Дотримання графіку провітрювання та прибирання (%),${globalKpiValues.kpi2}\n`;
+            csvContent += `3. Якість ведення CRM (%),${globalKpiValues.kpi3}\n`;
+            csvContent += `4. Запобігання кризовим ситуаціям (кількість на тиждень),${globalKpiValues.kpi4}\n`;
+            csvContent += `5. Оцінка умов навчання (%),${globalKpiValues.kpi5}\n`;
+            csvContent += `6. Комунікація з батьками (%),${globalKpiValues.kpi6}\n`;
+            csvContent += `7. Координація гуртків (%),${globalKpiValues.kpi7}\n`;
+
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `KPI_Звіт_${globalAdminName.replace(/\s/g, '_')}_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+            document.body.removeChild(link); // Clean up
+        }
+    </script>
+</body>
+</html>
